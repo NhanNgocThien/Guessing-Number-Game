@@ -1,0 +1,37 @@
+module manual_input (out,SW, select, state, set_trials, trials);
+	output reg [3:0] trials;
+	output reg [15:0] out;
+	reg [3:0] temp, dig1, dig2;
+	input [1:0] select;
+	input [3:0] SW;
+	input set_trials;
+	input state;
+	
+	always@(*) begin
+		if ( state == 1 )
+			case ( select ) 
+				2'd0: out[3:0]   <= SW[3:0];
+				2'd1: out[7:4]   <= SW[3:0];
+				2'd2: out[11:8]  <= SW[3:0];
+				2'd3: out[15:12] <= SW[3:0];
+			endcase
+				else begin
+					if ( set_trials == 0 ) 
+							case ( select ) 
+								2'd0: out[3:0]   <= SW[3:0];
+								2'd1: out[7:4]   <= SW[3:0];
+								2'd2: out[11:8]  <= SW[3:0];
+								2'd3: out[15:12] <= SW[3:0];
+							endcase
+						else begin
+							trials <= SW[3:0];
+							dig1 = SW / 10;
+							dig2 = SW - ( 10 * dig1 );
+							out[3:0] <= dig2;
+							out[7:4] <= dig1;
+							out[11:8] <= 4'd0;
+							out[15:12] <= 4'd0;
+						end
+				end
+		end
+endmodule 

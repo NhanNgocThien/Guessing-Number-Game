@@ -1,0 +1,13 @@
+module CNTtoLEDR (out, cnt, over );
+	output reg [15:1] out;
+	input [3:0] cnt;
+	input over;
+	
+	reg [4:0] i;
+	
+	always begin
+		if ( over ) out <= 15'b0;
+			else for (i = 1 ; i < 16 ; i = i + 1) out[i] = cnt >= i;	
+	end
+endmodule
+

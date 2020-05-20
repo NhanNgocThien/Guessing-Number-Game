@@ -1,0 +1,109 @@
+module BCDto7LED_2(LED4, LED3, LED2, LED1, data, cnt, en, over);
+	output reg [6:0] LED4, LED3, LED2, LED1;
+	input [15:0] data;
+	input [3:0] cnt;
+	input en, over;
+	
+	reg [3:0] bcd1, bcd2;
+	
+	always@ ( * ) begin
+		bcd1 = cnt / 10;
+		bcd2 = cnt - ( bcd1 * 10 );
+	end
+	
+	always @(*) begin
+		if (!en)    LED4 <= 7'b1111111; // No display 
+		else begin
+			if ( !over ) 
+				case (data[15:12])
+					4'b0000: LED4 <= 7'b0000001; // 0
+					4'b0001: LED4 <= 7'b1001111; // 1
+					4'b0010: LED4 <= 7'b0010010; // 2
+					4'b0011: LED4 <= 7'b0000110; // 3
+					4'b0100: LED4 <= 7'b1001100; // 4
+					4'b0101: LED4 <= 7'b0100100; // 5
+					4'b0110: LED4 <= 7'b0100000; // 6
+					4'b0111: LED4 <= 7'b0001111; // 7
+					4'b1000: LED4 <= 7'b0000000; // 8
+					default: LED4 <= 7'b0000100; // 9
+				endcase
+					else LED4 <= 7'b1111111;
+		end
+		
+		if (!en)    LED3 <= 7'b1111111; // No display 
+		else begin
+			if ( !over )
+				case (data[11: 8])
+					4'b0000: LED3 <= 7'b0000001; // 0
+					4'b0001: LED3 <= 7'b1001111; // 1
+					4'b0010: LED3 <= 7'b0010010; // 2
+					4'b0011: LED3 <= 7'b0000110; // 3
+					4'b0100: LED3 <= 7'b1001100; // 4
+					4'b0101: LED3 <= 7'b0100100; // 5
+					4'b0110: LED3 <= 7'b0100000; // 6
+					4'b0111: LED3 <= 7'b0001111; // 7
+					4'b1000: LED3 <= 7'b0000000; // 8
+					default: LED3 <= 7'b0000100; // 9
+				endcase
+					else LED3 <= 7'b1111111;
+		end
+		
+		if (!en)    LED2 <= 7'b1111111; // No display 
+		else begin
+			if ( !over )
+				case (data[ 7: 4])
+					4'b0000: LED2 <= 7'b0000001; // 0
+					4'b0001: LED2 <= 7'b1001111; // 1
+					4'b0010: LED2 <= 7'b0010010; // 2
+					4'b0011: LED2 <= 7'b0000110; // 3
+					4'b0100: LED2 <= 7'b1001100; // 4
+					4'b0101: LED2 <= 7'b0100100; // 5
+					4'b0110: LED2 <= 7'b0100000; // 6
+					4'b0111: LED2 <= 7'b0001111; // 7
+					4'b1000: LED2 <= 7'b0000000; // 8
+					default: LED2 <= 7'b0000100; // 9
+			endcase
+				else case ( bcd1 )
+					4'b0000: LED2 <= 7'b0000001; // 0
+					4'b0001: LED2 <= 7'b1001111; // 1
+					4'b0010: LED2 <= 7'b0010010; // 2
+					4'b0011: LED2 <= 7'b0000110; // 3
+					4'b0100: LED2 <= 7'b1001100; // 4
+					4'b0101: LED2 <= 7'b0100100; // 5
+					4'b0110: LED2 <= 7'b0100000; // 6
+					4'b0111: LED2 <= 7'b0001111; // 7
+					4'b1000: LED2 <= 7'b0000000; // 8
+					default: LED2 <= 7'b0000100; // 9
+						endcase
+		end
+		
+		if (!en)    LED1 <= 7'b1111111; // No display 
+		else begin
+			if ( !over )
+				case (data[ 3: 0])
+					4'b0000: LED1 <= 7'b0000001; // 0
+					4'b0001: LED1 <= 7'b1001111; // 1
+					4'b0010: LED1 <= 7'b0010010; // 2
+					4'b0011: LED1 <= 7'b0000110; // 3
+					4'b0100: LED1 <= 7'b1001100; // 4
+					4'b0101: LED1 <= 7'b0100100; // 5
+					4'b0110: LED1 <= 7'b0100000; // 6
+					4'b0111: LED1 <= 7'b0001111; // 7
+					4'b1000: LED1 <= 7'b0000000; // 8
+					default: LED1 <= 7'b0000100; // 9
+				endcase
+					else case ( bcd2 )
+						4'b0000: LED1 <= 7'b0000001; // 0
+						4'b0001: LED1 <= 7'b1001111; // 1
+						4'b0010: LED1 <= 7'b0010010; // 2
+						4'b0011: LED1 <= 7'b0000110; // 3
+						4'b0100: LED1 <= 7'b1001100; // 4
+						4'b0101: LED1 <= 7'b0100100; // 5
+						4'b0110: LED1 <= 7'b0100000; // 6
+						4'b0111: LED1 <= 7'b0001111; // 7
+						4'b1000: LED1 <= 7'b0000000; // 8
+						default: LED1 <= 7'b0000100; // 9
+							endcase
+			end
+	end
+endmodule

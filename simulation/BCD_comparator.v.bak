@@ -1,0 +1,37 @@
+module BCD_comparator (eq, gt, sm, state, submit, A, B);
+	output reg eq, gt, sm;										// eq equal, gt greater, sm smaller
+	input state;
+	input submit;
+	input [15:0] A, B;
+
+	
+	initial begin gt = 1'b0; eq = 1'b0; sm = 1'b0; end
+	
+	
+	always @(negedge submit) begin
+		if (state != 1) begin
+			gt <= 1'b0; eq <= 1'b0; sm <= 1'b0;
+		end
+		else if ( A[15:12] != B[15:12] ) begin 
+			gt <=  A[15:12] >  B[15:12];
+			sm <=  A[15:12] <  B[15:12];
+			eq <=  1'b0;
+		end
+		else if ( A[11: 8] != B[11: 8] ) begin
+			gt <=  A[11: 8] >  B[11: 8];
+			sm <=  A[11: 8] <  B[11: 8];
+			eq <=  1'b0;
+		end
+		else if ( A[ 7: 4] != B[ 7: 4] ) begin
+			gt <=  A[ 7: 4] >  B[ 7: 4];
+			sm <=  A[ 7: 4] <  B[ 7: 4];
+			eq <=  1'b0;
+		end
+		else if ( A[ 3: 0] != B[ 3: 0] ) begin
+			gt <=  A[ 3: 0] >  B[ 3: 0];
+			sm <=  A[ 3: 0] <  B[ 3: 0];
+			eq <=  1'b0;
+		end
+		else eq <= 1'b1;
+	end
+endmodule
